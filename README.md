@@ -1,1 +1,2 @@
-# leetcode
+力扣学习题库以及一些面试的面试题
+some leetcode problems and interview questions
