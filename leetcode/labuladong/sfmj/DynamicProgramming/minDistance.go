@@ -23,8 +23,9 @@ func minDistance(word1 string, word2 string) int {
 			cache[i][j] = -1
 		}
 	}
-	var dp func(w1, w2 string, i, j int) int
-	dp = func(w1, w2 string, i, j int) int {
+	// dp表示word1从0-i转化为word2从0-j的最小次数
+	var dp func(i, j int) int
+	dp = func(i, j int) int {
 		if i == -1 {
 			return j + 1
 		}
@@ -34,12 +35,12 @@ func minDistance(word1 string, word2 string) int {
 		if cache[i][j] != -1 {
 			return cache[i][j]
 		}
-		if w1[i] == w2[j] {
-			cache[i][j] = dp(w1, w2, i-1, j-1)
+		if word1[i] == word2[j] {
+			cache[i][j] = dp(i-1, j-1)
 		} else {
-			insert := dp(w1, w2, i, j-1)
-			replace := dp(w1, w2, i-1, j-1)
-			delete := dp(w1, w2, i-1, j)
+			insert := dp(i, j-1)
+			replace := dp(i-1, j-1)
+			delete := dp(i-1, j)
 			cache[i][j] = insert + 1
 			if replace+1 < cache[i][j] {
 				cache[i][j] = replace + 1
@@ -50,7 +51,7 @@ func minDistance(word1 string, word2 string) int {
 		}
 		return cache[i][j]
 	}
-	return dp(word1, word2, m-1, n-1)
+	return dp(m-1, n-1)
 }
 
 func main() {
